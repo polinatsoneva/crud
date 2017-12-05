@@ -19,4 +19,9 @@ $databaseUsername = 'root';
 $databasePassword = 'root';
  
 $mysqli = mysqli_connect($databaseHost, $databaseUsername, $databasePassword, $databaseName); 
+    if($mysqli == false){
+        echo 'error: ' . $mysqli_error();
+    } else {
+        echo 'Connected to:    ' . $databaseName;
+    }
 ?>
