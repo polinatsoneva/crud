@@ -10,9 +10,10 @@
 include_once("config.php");
  
 if(isset($_POST['Submit'])) {    
-    $name = $_POST['name'];
-    $age = $_POST['age'];
-    $email = $_POST['email'];
+   $name = mysqli_real_escape_string($mysqli, $_POST['name']);
+    $age = mysqli_real_escape_string($mysqli, $_POST['age']);
+    $email = mysqli_real_escape_string($mysqli, $_POST['email']);
+}
         
     // checking empty fields
     if(empty($name) || empty($age) || empty($email)) {                
@@ -33,13 +34,28 @@ if(isset($_POST['Submit'])) {
     } else { 
         // if all the fields are filled (not empty)             
         //insert data to database
-        $result = mysqli_query($mysqli, "INSERT INTO users(name,age,email) VALUES('$name','$age','$email')");
+        			 if(mysqli_query($mysqli, "INSERT INTO users(name,age,email) VALUES('$name','$age','$email')"))
+			 {
+			  ?>
+					<?php
+					echo "You have been registered";
+
+					echo "<script>setTimeout(\"location.href = 'pages/index.php';\",1500);</script>";
+
+					?>
+					<?php
+			 }
+			 else
+			 {
+			  ?>
+					<script>alert('error while registering you...');</script>
+					<?php
+			 }
         
         //display success message
         echo "<font color='green'>Data added successfully.";
         echo "<br/><a href='index.php'>View Result</a>";
     }
-}
 ?>
 </body>
 </html>
